@@ -39,7 +39,7 @@ static const CanMsg HYUNDAI_TX_MSGS[] = {
   {.msg = {{0x394, pt_bus, 8, .check_checksum = !(legacy), .max_counter = (legacy) ? 0U : 7U, .frequency = (can_canfd_hybrid) ? 50U : 100U}, { 0 }, { 0 }}},  \
 
 #define HYUNDAI_SCC12_ADDR_CHECK(scc_bus, can_canfd_hybrid)                                                                               \
-  {.msg = {{0x421, (scc_bus), 8, !(can_canfd_hybrid), .max_counter = 15U, .frequency = 50U}, { 0 }, { 0 }}}, \
+  {.msg = {{0x421, (scc_bus), 8, .check_checksum = !(can_canfd_hybrid), .max_counter = 15U, .frequency = 50U}, { 0 }, { 0 }}}, \
 
 static bool hyundai_legacy = false;
 
@@ -110,7 +110,7 @@ static uint32_t hyundai_compute_checksum(const CANPacket_t *to_push) {
       }
       chksum += (b % 16U) + (b / 16U);
     }
-    chksum = (16U - (chksum %  16U)) % 16U;
+    chksum = (16U - (chksum % 16U)) % 16U;
   }
 
   return chksum;
