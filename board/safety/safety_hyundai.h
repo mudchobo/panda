@@ -128,7 +128,6 @@ static void hyundai_rx_hook(const CANPacket_t *to_push) {
   if ((addr == 0x421) && (bus == scc_bus)) {
     uint8_t cruise_byte = hyundai_can_canfd_hybrid ? (GET_BYTE(to_push, 3) >> 4) : (GET_BYTES(to_push, 0, 4) >> 13);
     bool cruise_engaged = (cruise_byte & 0x3U) != 0U;
-    int cruise_engaged = (GET_BYTES(to_push, 0, 4) >> 13) & 0x3U;
     hyundai_common_cruise_state_check(cruise_engaged);
   }
 
